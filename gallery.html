@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>作品展示 | どらねこ Doraneko</title>
+<meta name="description" content="どらねこ（Doraneko）のAIアート・小説・短歌などの作品を展示するページです。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="作品展示 | どらねこ Doraneko">
+<meta property="og:description" content="AIアート・小説・短歌などの作品展示。">
+<meta property="og:image" content="icon.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@doraneko840">
+<meta name="theme-color" content="#e8471c">
+<link rel="icon" href="icon.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&family=M+PLUS+Rounded+1c:wght@800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-top: #dfe9f2;
+    --bg-bottom: #a9c3d9;
+    --card: rgba(255, 255, 255, 0.92);
+    --tile: #ffffff;
+    --ink: #2b2f36;
+    --muted: #7a828e;
+    --accent: #e8471c;
+    --accent-soft: #fde6dd;
+    --gold: #b8892b;
+    --gold-soft: #f7efd9;
+    --line: rgba(43, 47, 54, 0.08);
+    --shadow: 0 6px 24px rgba(40, 70, 100, 0.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-top: #1b2430;
+      --bg-bottom: #0e141c;
+      --card: rgba(30, 38, 50, 0.9);
+      --tile: #26303d;
+      --ink: #eef1f5;
+      --muted: #9aa4b1;
+      --accent-soft: #3a2620;
+      --gold: #d8b25a;
+      --gold-soft: #3a3220;
+      --line: rgba(255, 255, 255, 0.08);
+      --shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+    }
+  }
+  * { box-sizing: border-box; }
+  html {
+    min-height: 100%;
+    background:
+      radial-gradient(ellipse at 50% 110%, rgba(255,255,255,0.55), transparent 60%),
+      linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+  }
+  body {
+    margin: 0; min-height: 100vh;
+    font-family: "Zen Maru Gothic", system-ui, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    padding: 24px 16px 48px;
+  }
+
+  .snow { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+  .snow i { position: absolute; top: -10px; border-radius: 50%; background: rgba(255,255,255,.85); animation: fall linear infinite; }
+  @keyframes fall { to { transform: translate(var(--drift), 105vh); } }
+  @media (prefers-reduced-motion: reduce) { .snow { display: none; } }
+
+  main {
+    position: relative; z-index: 1;
+    max-width: 600px; margin: 0 auto;
+    background: var(--card);
+    backdrop-filter: blur(6px);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 24px 20px 28px;
+  }
+
+  .back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--muted); text-decoration: none; font-size: 14px; padding: 6px 2px;
+  }
+  .back:hover { color: var(--accent); }
+
+  header { text-align: center; margin: 8px 0 20px; }
+  .mini-avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    margin: 0 auto 10px; overflow: hidden;
+    background: var(--accent-soft); display: grid; place-items: center; font-size: 28px;
+    box-shadow: var(--shadow);
+  }
+  .mini-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  h1 {
+    margin: 0;
+    font-family: "M PLUS Rounded 1c", "Zen Maru Gothic", sans-serif;
+    font-weight: 800; font-size: 24px; letter-spacing: 0.04em;
+  }
+  .sub { margin: 4px 0 0; color: var(--muted); font-size: 13px; letter-spacing: 0.12em; }
+
+  .stats { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 18px 0 6px; }
+  .stat { min-width: 92px; padding: 10px 12px; border-radius: 12px; text-align: center; background: var(--gold-soft); color: var(--gold); }
+  .stat b { display: block; font-size: 22px; line-height: 1.1; }
+  .stat span { font-size: 11px; letter-spacing: .08em; }
+
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin: 18px 0 20px; }
+  .filters button {
+    font: inherit; font-size: 13px; cursor: pointer;
+    padding: 6px 14px; border-radius: 999px;
+    background: var(--tile); color: var(--ink); border: 1px solid var(--line);
+  }
+  .filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+
+  .work {
+    background: var(--tile); border: 1px solid var(--line);
+    border-radius: 16px; padding: 16px;
+    box-shadow: 0 2px 8px rgba(40,70,100,.06);
+  }
+  .head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+  .badge {
+    padding: 3px 10px; border-radius: 999px;
+    background: var(--gold); color: #fff; font-size: 12px; font-weight: 700;
+  }
+  .cat { font-size: 12px; font-weight: 700; color: var(--accent); }
+  .date { font-size: 12px; color: var(--muted); margin-left: auto; }
+  .work h2 { margin: 0 0 2px; font-size: 17px; line-height: 1.5; }
+  .contest { margin: 0; font-size: 13px; color: var(--muted); }
+  .summary {
+    margin: 10px 0 0; padding: 10px 12px;
+    font-size: 14px; line-height: 1.8;
+    background: var(--gold-soft); border-radius: 10px;
+    white-space: pre-line;
+  }
+
+  /* Xの投稿埋め込み */
+  .embed { margin-top: 12px; }
+  .embed .twitter-tweet { margin: 0 auto !important; }
+  .embed blockquote.twitter-tweet {
+    margin: 0; padding: 12px 14px; border-left: 3px solid var(--line);
+    font-size: 14px; color: var(--muted);
+  }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px; border-radius: 999px;
+    font-size: 13px; font-weight: 700; text-decoration: none;
+    background: var(--accent); color: #fff;
+  }
+  .btn.sub-btn { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  .btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
+
+  .empty { text-align: center; color: var(--muted); padding: 32px 0; }
+  footer { margin-top: 28px; text-align: center; font-size: 12px; color: var(--muted); }
+</style>
+</head>
+<body>
+  <div class="snow" aria-hidden="true" id="snow"></div>
+
+  <main>
+    <a class="back" href="./">‹ リンク集へ戻る</a>
+
+    <header>
+      <div class="mini-avatar" aria-hidden="true"><img src="icon.jpg" alt="" onerror="this.parentNode.textContent='🐟';"></div>
+      <h1>作品展示</h1>
+      <p class="sub">GALLERY</p>
+    </header>
+
+    <div class="stats" id="stats"></div>
+    <div class="filters" id="filters" role="group" aria-label="ジャンルで絞り込み"></div>
+
+    <ul class="list" id="list"></ul>
+    <p class="empty" id="empty" hidden>該当する作品はまだありません。</p>
+
+    <footer>© どらねこ Doraneko ／ 掲載作品の無断転載はご遠慮ください。</footer>
+  </main>
+
+<script>
+/* =========================================================
+   ▼ ここに作品を書き足していきます（順番は自由。発表日の新しい順に並びます）
+   ---------------------------------------------------------
+   title     : 作品名
+   category  : ジャンル（AIアート／小説／短歌 など。同じ言葉で揃えると絞り込みボタンになります）
+   award     : 賞の名前（受賞作なら記入。通常は "" のままで可）
+   contest   : シリーズ名や掲載先など（無ければ ""）
+   date      : 公開日（例：2026-11-30。年月だけなら 2026-11 でも可）
+   summary   : 作品概要（小説・短歌向け。不要なら ""）
+   url       : 作品のURL
+               ・Xの投稿URL（x.com/…/status/…）なら、投稿がページ内に埋め込み表示されます
+               ・それ以外（カクヨム、TALES、note など）は「作品を読む」ボタンになります
+   resultUrl : 関連ページのURL（無ければ ""）
+   ※ 下の2件は書き方の見本です。実際の作品に書き換えるか、削除してください。
+   ========================================================= */
+const WORKS = [
+  {
+    title: "（見本）Xに投稿したAIアート",
+    category: "AIアート",
+    award: "",
+    contest: "金線画シリーズ",
+    date: "2026-11-30",
+    summary: "",
+    url: "https://x.com/doraneko840/status/0000000000000000000",
+    resultUrl: ""
+  },
+  {
+    title: "（見本）小説・短歌の場合",
+    category: "小説",
+    award: "",
+    contest: "連載中",
+    date: "2026-09-01",
+    summary: "作品の概要を2〜3行で。\n改行したいところには ＼n を入れます。",
+    url: "https://kakuyomu.jp/users/Doraneko840",
+    resultUrl: ""
+  },
+];
+/* ===================== ▲ ここまで ===================== */
+
+(function () {
+  const list = document.getElementById('list');
+  const empty = document.getElementById('empty');
+  const filters = document.getElementById('filters');
+  const stats = document.getElementById('stats');
+
+  const isX = u => /^https?:\/\/(www\.)?(x|twitter)\.com\/[^/]+\/status\/\d+/.test(u || '');
+  const siteName = u => {
+    const host = (() => { try { return new URL(u).hostname; } catch (e) { return ''; } })();
+    if (/kakuyomu/.test(host)) return 'カクヨムで読む';
+    if (/syosetu/.test(host)) return '小説家になろうで読む';
+    if (/tales\.note/.test(host)) return 'TALESで読む';
+    if (/note\.com/.test(host)) return 'noteで読む';
+    if (/(x|twitter)\.com/.test(host)) return 'Xで見る';
+    return '作品を見る';
+  };
+  const fmt = s => {
+    const m = /^(\d{4})-(\d{1,2})(?:-(\d{1,2}))?/.exec(s || '');
+    return m ? `${m[1]}年${+m[2]}月${m[3] ? +m[3] + '日' : ''}` : (s || '');
+  };
+  const el = (tag, cls, text) => {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  };
+
+  const works = WORKS.slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  const cats = [...new Set(works.map(w => w.category).filter(Boolean))];
+
+  // 集計
+  const addStat = (num, label) => {
+    const d = el('div', 'stat');
+    d.append(el('b', null, num), el('span', null, label));
+    stats.appendChild(d);
+  };
+  addStat(works.length, '作品');
+  cats.forEach(c => addStat(works.filter(w => w.category === c).length, c));
+
+  // 絞り込み
+  let current = 'すべて';
+  ['すべて', ...cats].forEach(c => {
+    const b = el('button', null, c);
+    b.type = 'button';
+    b.setAttribute('aria-pressed', c === current);
+    b.addEventListener('click', () => {
+      current = c;
+      filters.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+      render();
+    });
+    filters.appendChild(b);
+  });
+  if (cats.length < 2) filters.hidden = true;
+
+  function card(w) {
+    const li = el('li', 'work');
+
+    const head = el('div', 'head');
+    if (w.award) head.appendChild(el('span', 'badge', '🏆 ' + w.award));
+    if (w.category) head.appendChild(el('span', 'cat', w.category));
+    if (w.date) head.appendChild(el('span', 'date', fmt(w.date)));
+    li.appendChild(head);
+
+    li.appendChild(el('h2', null, w.title));
+    if (w.contest) li.appendChild(el('p', 'contest', w.contest));
+    if (w.summary) li.appendChild(el('p', 'summary', w.summary));
+
+    // Xの投稿は埋め込み
+    if (isX(w.url)) {
+      const box = el('div', 'embed');
+      const bq = el('blockquote', 'twitter-tweet');
+      bq.setAttribute('data-lang', 'ja');
+      bq.setAttribute('data-dnt', 'true');
+      if (matchMedia('(prefers-color-scheme: dark)').matches) bq.setAttribute('data-theme', 'dark');
+      const a = el('a', null, 'Xの投稿を読み込んでいます…（表示されない場合は下のボタンから）');
+      a.href = w.url.replace('://x.com', '://twitter.com');
+      bq.appendChild(a);
+      box.appendChild(bq);
+      li.appendChild(box);
+    }
+
+    const actions = el('div', 'actions');
+    if (w.url) {
+      const a = el('a', 'btn', siteName(w.url) + ' ›');
+      a.href = w.url; a.target = '_blank'; a.rel = 'noopener';
+      actions.appendChild(a);
+    }
+    if (w.resultUrl) {
+      const a = el('a', 'btn sub-btn', '関連ページ ›');
+      a.href = w.resultUrl; a.target = '_blank'; a.rel = 'noopener';
+      actions.appendChild(a);
+    }
+    if (actions.children.length) li.appendChild(actions);
+    return li;
+  }
+
+  function render() {
+    list.innerHTML = '';
+    const shown = works.filter(w => current === 'すべて' || w.category === current);
+    shown.forEach(w => list.appendChild(card(w)));
+    empty.hidden = shown.length > 0;
+    if (window.twttr && twttr.widgets) twttr.widgets.load(list);
+  }
+  render();
+
+  // Xの埋め込み用スクリプト（Xの投稿がある時だけ読み込む）
+  if (works.some(w => isX(w.url))) {
+    const s = document.createElement('script');
+    s.src = 'https://platform.twitter.com/widgets.js';
+    s.async = true; s.charset = 'utf-8';
+    document.body.appendChild(s);
+  }
+
+  // 雪
+  const snow = document.getElementById('snow');
+  for (let i = 0; i < 30; i++) {
+    const s = document.createElement('i');
+    const size = 2 + Math.random() * 5;
+    s.style.width = s.style.height = size + 'px';
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.opacity = 0.4 + Math.random() * 0.6;
+    s.style.animationDuration = 8 + Math.random() * 12 + 's';
+    s.style.animationDelay = -Math.random() * 20 + 's';
+    s.style.setProperty('--drift', (Math.random() * 60 - 30) + 'px');
+    snow.appendChild(s);
+  }
+})();
+</script>
+</body>
+</html>
