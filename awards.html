@@ -47,6 +47,7 @@
     }
   }
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   html {
     min-height: 100%;
     background:
@@ -68,7 +69,7 @@
 
   main {
     position: relative; z-index: 1;
-    max-width: 720px; margin: 0 auto;
+    max-width: 600px; margin: 0 auto;
     background: var(--card);
     backdrop-filter: blur(6px);
     border-radius: 20px;
@@ -78,8 +79,7 @@
 
   .back {
     display: inline-flex; align-items: center; gap: 6px;
-    color: var(--muted); text-decoration: none; font-size: 14px;
-    padding: 6px 2px;
+    color: var(--muted); text-decoration: none; font-size: 14px; padding: 6px 2px;
   }
   .back:hover { color: var(--accent); }
 
@@ -98,74 +98,61 @@
   }
   .sub { margin: 4px 0 0; color: var(--muted); font-size: 13px; letter-spacing: 0.12em; }
 
-  /* 集計 */
   .stats { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 18px 0 6px; }
-  .stat {
-    min-width: 92px; padding: 10px 12px; border-radius: 12px; text-align: center;
-    background: var(--gold-soft); color: var(--gold);
-  }
+  .stat { min-width: 92px; padding: 10px 12px; border-radius: 12px; text-align: center; background: var(--gold-soft); color: var(--gold); }
   .stat b { display: block; font-size: 22px; line-height: 1.1; }
   .stat span { font-size: 11px; letter-spacing: .08em; }
 
-  /* 絞り込み */
   .filters { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin: 18px 0 20px; }
   .filters button {
     font: inherit; font-size: 13px; cursor: pointer;
     padding: 6px 14px; border-radius: 999px;
-    background: var(--tile); color: var(--ink);
-    border: 1px solid var(--line);
+    background: var(--tile); color: var(--ink); border: 1px solid var(--line);
   }
   .filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
 
-  /* 作品カード */
-  .grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; grid-template-columns: 1fr; }
-  @media (min-width: 560px) { .grid { grid-template-columns: 1fr 1fr; } }
+  .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
 
   .work {
     background: var(--tile); border: 1px solid var(--line);
-    border-radius: 16px; overflow: hidden;
+    border-radius: 16px; padding: 16px;
     box-shadow: 0 2px 8px rgba(40,70,100,.06);
-    display: flex; flex-direction: column;
   }
-  .thumb {
-    position: relative; aspect-ratio: 4 / 3; background: var(--accent-soft);
-    border: 0; padding: 0; width: 100%; cursor: zoom-in; display: block;
-  }
-  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .thumb.noimg { cursor: default; display: grid; place-items: center; font-size: 36px; aspect-ratio: 16 / 6; }
+  .head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
   .badge {
-    position: absolute; left: 10px; top: 10px;
-    padding: 4px 10px; border-radius: 999px;
+    padding: 3px 10px; border-radius: 999px;
     background: var(--gold); color: #fff; font-size: 12px; font-weight: 700;
-    box-shadow: 0 2px 6px rgba(0,0,0,.2);
   }
-  .body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
-  .meta { font-size: 12px; color: var(--muted); display: flex; gap: 8px; flex-wrap: wrap; }
-  .cat { color: var(--accent); font-weight: 700; }
-  .work h2 { margin: 0; font-size: 17px; line-height: 1.5; }
-  .contest { margin: 0; font-size: 13px; color: var(--ink); }
-  .note { margin: 2px 0 0; font-size: 13px; color: var(--muted); line-height: 1.7; }
-  .more {
-    margin-top: auto; align-self: flex-start;
-    font-size: 13px; color: var(--accent); text-decoration: none; padding-top: 6px;
+  .cat { font-size: 12px; font-weight: 700; color: var(--accent); }
+  .date { font-size: 12px; color: var(--muted); margin-left: auto; }
+  .work h2 { margin: 0 0 2px; font-size: 17px; line-height: 1.5; }
+  .contest { margin: 0; font-size: 13px; color: var(--muted); }
+  .summary {
+    margin: 10px 0 0; padding: 10px 12px;
+    font-size: 14px; line-height: 1.8;
+    background: var(--gold-soft); border-radius: 10px;
+    white-space: pre-line;
   }
-  .more:hover { text-decoration: underline; }
+
+  /* Xの投稿埋め込み */
+  .embed { margin-top: 12px; }
+  .embed .twitter-tweet { margin: 0 auto !important; }
+  .embed blockquote.twitter-tweet {
+    margin: 0; padding: 12px 14px; border-left: 3px solid var(--line);
+    font-size: 14px; color: var(--muted);
+  }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px; border-radius: 999px;
+    font-size: 13px; font-weight: 700; text-decoration: none;
+    background: var(--accent); color: #fff;
+  }
+  .btn.sub-btn { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  .btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
 
   .empty { text-align: center; color: var(--muted); padding: 32px 0; }
-
-  /* 拡大表示 */
-  dialog {
-    border: 0; padding: 0; background: transparent; max-width: 94vw; max-height: 92vh;
-  }
-  dialog::backdrop { background: rgba(10, 15, 22, .85); }
-  dialog img { max-width: 94vw; max-height: 84vh; display: block; border-radius: 10px; }
-  dialog p { color: #fff; text-align: center; margin: 10px 0 0; font-size: 14px; }
-  dialog button {
-    position: fixed; top: 14px; right: 14px;
-    width: 40px; height: 40px; border-radius: 50%; border: 0;
-    background: rgba(255,255,255,.9); font-size: 20px; cursor: pointer;
-  }
-
   footer { margin-top: 28px; text-align: center; font-size: 12px; color: var(--muted); }
 </style>
 </head>
@@ -184,93 +171,86 @@
     <div class="stats" id="stats"></div>
     <div class="filters" id="filters" role="group" aria-label="ジャンルで絞り込み"></div>
 
-    <ul class="grid" id="grid"></ul>
+    <ul class="list" id="list"></ul>
     <p class="empty" id="empty" hidden>該当する作品はまだありません。</p>
 
     <footer>© どらねこ Doraneko ／ 掲載作品の無断転載はご遠慮ください。</footer>
   </main>
 
-  <dialog id="viewer">
-    <button type="button" aria-label="閉じる" id="close">×</button>
-    <img id="viewer-img" alt="">
-    <p id="viewer-cap"></p>
-  </dialog>
-
 <script>
 /* =========================================================
-   ▼ ここに作品を書き足していきます（新しいものを上に）
+   ▼ ここに作品を書き足していきます（順番は自由。発表日の新しい順に並びます）
    ---------------------------------------------------------
-   title    : 作品名
-   category : ジャンル（AIアート／小説／短歌 など自由。同じ言葉で揃えると絞り込みボタンになります）
-   award    : 賞の名前（例：入選、佳作、最優秀賞）
-   contest  : コンテスト名
-   date     : 発表日（例：2026-11-30）
-   image    : 画像ファイル（images フォルダに入れてファイル名を書く。無ければ ""）
-   url      : 結果発表ページや作品ページのURL（無ければ ""）
-   note     : ひとこと説明（無ければ ""）
+   title     : 作品名
+   category  : ジャンル（AIアート／小説／短歌 など。同じ言葉で揃えると絞り込みボタンになります）
+   award     : 賞の名前（例：入選、佳作、最優秀賞）
+   contest   : コンテスト名
+   date      : 発表日（例：2026-11-30。年月だけなら 2026-11 でも可）
+   summary   : 作品概要（小説・短歌向け。不要なら ""）
+   url       : 作品のURL
+               ・Xの投稿URL（x.com/…/status/…）なら、投稿がページ内に埋め込み表示されます
+               ・それ以外（カクヨム、TALES、note など）は「作品を読む」ボタンになります
+   resultUrl : 結果発表ページのURL（無ければ ""）
    ※ 下の2件は書き方の見本です。実際の作品に書き換えるか、削除してください。
    ========================================================= */
 const WORKS = [
   {
-    title: "（見本）作品名をここに",
+    title: "PixAI Tsubaki.3 スペシャルコンテスト",
     category: "AIアート",
-    award: "入選",
-    contest: "コンテスト名をここに",
-    date: "2026-11-30",
-    image: "images/sample.jpg",
-    url: "",
-    note: "金線画シリーズの一枚。制作の狙いなどをひとことで。"
-  },
-  {
-    title: "（見本）小説・短歌の場合",
-    category: "小説",
-    award: "佳作",
-    contest: "コンテスト名をここに",
-    date: "2026-09-01",
-    image: "",
-    url: "",
-    note: "画像がない作品は、アイコンの代わりに絵文字が表示されます。"
+    award: "優秀賞",
+    contest: "",
+    date: "2026-10",
+    summary: "",
+    url: "https://x.com/doraneko840/status/2104059916843671631",
+    resultUrl: ""
   },
 ];
 /* ===================== ▲ ここまで ===================== */
 
 (function () {
-  const grid = document.getElementById('grid');
+  const list = document.getElementById('list');
   const empty = document.getElementById('empty');
   const filters = document.getElementById('filters');
   const stats = document.getElementById('stats');
-  const viewer = document.getElementById('viewer');
-  const vImg = document.getElementById('viewer-img');
-  const vCap = document.getElementById('viewer-cap');
-  const icons = { "AIアート": "🎨", "小説": "📖", "短歌": "🌸" };
+
+  const isX = u => /^https?:\/\/(www\.)?(x|twitter)\.com\/[^/]+\/status\/\d+/.test(u || '');
+  const siteName = u => {
+    const host = (() => { try { return new URL(u).hostname; } catch (e) { return ''; } })();
+    if (/kakuyomu/.test(host)) return 'カクヨムで読む';
+    if (/syosetu/.test(host)) return '小説家になろうで読む';
+    if (/tales\.note/.test(host)) return 'TALESで読む';
+    if (/note\.com/.test(host)) return 'noteで読む';
+    if (/(x|twitter)\.com/.test(host)) return 'Xで見る';
+    return '作品を見る';
+  };
+  const fmt = s => {
+    const m = /^(\d{4})-(\d{1,2})(?:-(\d{1,2}))?/.exec(s || '');
+    return m ? `${m[1]}年${+m[2]}月${m[3] ? +m[3] + '日' : ''}` : (s || '');
+  };
+  const el = (tag, cls, text) => {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  };
 
   const works = WORKS.slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
   const cats = [...new Set(works.map(w => w.category).filter(Boolean))];
 
   // 集計
   const addStat = (num, label) => {
-    const d = document.createElement('div');
-    d.className = 'stat';
-    d.innerHTML = '<b></b><span></span>';
-    d.querySelector('b').textContent = num;
-    d.querySelector('span').textContent = label;
+    const d = el('div', 'stat');
+    d.append(el('b', null, num), el('span', null, label));
     stats.appendChild(d);
   };
   addStat(works.length, '受賞・入賞');
   cats.forEach(c => addStat(works.filter(w => w.category === c).length, c));
 
-  // 日付表示
-  const fmt = s => {
-    const m = /^(\d{4})-(\d{1,2})(?:-(\d{1,2}))?/.exec(s || '');
-    return m ? `${m[1]}年${+m[2]}月${m[3] ? +m[3] + '日' : ''}` : (s || '');
-  };
-
-  // 絞り込みボタン
+  // 絞り込み
   let current = 'すべて';
   ['すべて', ...cats].forEach(c => {
-    const b = document.createElement('button');
+    const b = el('button', null, c);
     b.type = 'button';
-    b.textContent = c;
     b.setAttribute('aria-pressed', c === current);
     b.addEventListener('click', () => {
       current = c;
@@ -282,70 +262,66 @@ const WORKS = [
   if (cats.length < 2) filters.hidden = true;
 
   function card(w) {
-    const li = document.createElement('li');
-    li.className = 'work';
+    const li = el('li', 'work');
 
-    const thumb = document.createElement(w.image ? 'button' : 'div');
-    thumb.className = 'thumb' + (w.image ? '' : ' noimg');
-    if (w.image) {
-      thumb.type = 'button';
-      thumb.setAttribute('aria-label', `${w.title} を拡大表示`);
-      const img = document.createElement('img');
-      img.src = w.image; img.alt = w.title; img.loading = 'lazy';
-      img.onerror = () => { thumb.classList.add('noimg'); img.remove(); thumb.prepend(icons[w.category] || '🏅'); thumb.disabled = true; };
-      thumb.appendChild(img);
-      thumb.addEventListener('click', () => {
-        vImg.src = w.image; vImg.alt = w.title;
-        vCap.textContent = `${w.title} ／ ${w.contest} ${w.award}`;
-        viewer.showModal();
-      });
-    } else {
-      thumb.textContent = icons[w.category] || '🏅';
+    const head = el('div', 'head');
+    if (w.award) head.appendChild(el('span', 'badge', '🏆 ' + w.award));
+    if (w.category) head.appendChild(el('span', 'cat', w.category));
+    if (w.date) head.appendChild(el('span', 'date', fmt(w.date)));
+    li.appendChild(head);
+
+    li.appendChild(el('h2', null, w.title));
+    if (w.contest) li.appendChild(el('p', 'contest', w.contest));
+    if (w.summary) li.appendChild(el('p', 'summary', w.summary));
+
+    // Xの投稿は埋め込み
+    if (isX(w.url)) {
+      const box = el('div', 'embed');
+      const bq = el('blockquote', 'twitter-tweet');
+      bq.setAttribute('data-lang', 'ja');
+      bq.setAttribute('data-dnt', 'true');
+      if (matchMedia('(prefers-color-scheme: dark)').matches) bq.setAttribute('data-theme', 'dark');
+      const a = el('a', null, 'Xの投稿を読み込んでいます…（表示されない場合は下のボタンから）');
+      a.href = w.url.replace('://x.com', '://twitter.com');
+      bq.appendChild(a);
+      box.appendChild(bq);
+      li.appendChild(box);
     }
-    if (w.award) {
-      const badge = document.createElement('span');
-      badge.className = 'badge';
-      badge.textContent = '🏆 ' + w.award;
-      thumb.appendChild(badge);
-    }
-    li.appendChild(thumb);
 
-    const body = document.createElement('div');
-    body.className = 'body';
-    const meta = document.createElement('div');
-    meta.className = 'meta';
-    meta.innerHTML = '<span class="cat"></span><span class="date"></span>';
-    meta.querySelector('.cat').textContent = w.category || '';
-    meta.querySelector('.date').textContent = fmt(w.date);
-    body.appendChild(meta);
-
-    const h = document.createElement('h2'); h.textContent = w.title; body.appendChild(h);
-    if (w.contest) { const p = document.createElement('p'); p.className = 'contest'; p.textContent = w.contest; body.appendChild(p); }
-    if (w.note) { const p = document.createElement('p'); p.className = 'note'; p.textContent = w.note; body.appendChild(p); }
+    const actions = el('div', 'actions');
     if (w.url) {
-      const a = document.createElement('a');
-      a.className = 'more'; a.href = w.url; a.target = '_blank'; a.rel = 'noopener';
-      a.textContent = '結果発表・作品ページを見る ›';
-      body.appendChild(a);
+      const a = el('a', 'btn', siteName(w.url) + ' ›');
+      a.href = w.url; a.target = '_blank'; a.rel = 'noopener';
+      actions.appendChild(a);
     }
-    li.appendChild(body);
+    if (w.resultUrl) {
+      const a = el('a', 'btn sub-btn', '結果発表 ›');
+      a.href = w.resultUrl; a.target = '_blank'; a.rel = 'noopener';
+      actions.appendChild(a);
+    }
+    if (actions.children.length) li.appendChild(actions);
     return li;
   }
 
   function render() {
-    grid.innerHTML = '';
-    const list = works.filter(w => current === 'すべて' || w.category === current);
-    list.forEach(w => grid.appendChild(card(w)));
-    empty.hidden = list.length > 0;
+    list.innerHTML = '';
+    const shown = works.filter(w => current === 'すべて' || w.category === current);
+    shown.forEach(w => list.appendChild(card(w)));
+    empty.hidden = shown.length > 0;
+    if (window.twttr && twttr.widgets) twttr.widgets.load(list);
   }
   render();
 
-  // 拡大表示を閉じる
-  document.getElementById('close').addEventListener('click', () => viewer.close());
-  viewer.addEventListener('click', e => { if (e.target === viewer) viewer.close(); });
+  // Xの埋め込み用スクリプト（Xの投稿がある時だけ読み込む）
+  if (works.some(w => isX(w.url))) {
+    const s = document.createElement('script');
+    s.src = 'https://platform.twitter.com/widgets.js';
+    s.async = true; s.charset = 'utf-8';
+    document.body.appendChild(s);
+  }
 
   // 雪
-  const box = document.getElementById('snow');
+  const snow = document.getElementById('snow');
   for (let i = 0; i < 30; i++) {
     const s = document.createElement('i');
     const size = 2 + Math.random() * 5;
@@ -355,7 +331,7 @@ const WORKS = [
     s.style.animationDuration = 8 + Math.random() * 12 + 's';
     s.style.animationDelay = -Math.random() * 20 + 's';
     s.style.setProperty('--drift', (Math.random() * 60 - 30) + 'px');
-    box.appendChild(s);
+    snow.appendChild(s);
   }
 })();
 </script>
