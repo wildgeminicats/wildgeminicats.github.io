@@ -204,6 +204,26 @@ const WORKS = [
     url: "https://x.com/doraneko840/status/2104059916843671631",
     resultUrl: ""
   },
+  {
+    title: "EGOIST 8月1日発行号",
+    category: "AIアート",
+    award: "表紙採用",
+    contest: "",
+    date: "2026-08",
+    summary: "",
+    url: "https://etomusu-zoukango.booth.pm/items/8671468",
+    resultUrl: ""
+  },
+  {
+    title: "PixAI 春日の響き・スペシャルイラストコンテスト",
+    category: "AIアート",
+    award: "優秀賞",
+    contest: "",
+    date: "2026-05",
+    summary: "",
+    url: "https://x.com/doraneko840/status/2054141547554488721",
+    resultUrl: ""
+  },
 ];
 /* ===================== ▲ ここまで ===================== */
 
@@ -221,6 +241,7 @@ const WORKS = [
     if (/tales\.note/.test(host)) return 'TALESで読む';
     if (/note\.com/.test(host)) return 'noteで読む';
     if (/(x|twitter)\.com/.test(host)) return 'Xで見る';
+    if (/booth\.pm/.test(host)) return 'BOOTHで見る';
     return '作品を見る';
   };
   const fmt = s => {
