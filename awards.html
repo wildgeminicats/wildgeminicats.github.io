@@ -142,6 +142,12 @@
     font-size: 14px; color: var(--muted);
   }
 
+  /* 受賞証明の画像 */
+  .cert { margin: 12px 0 0; }
+  .cert a { display: block; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: var(--gold-soft); }
+  .cert img { display: block; width: 100%; height: auto; max-height: 420px; object-fit: contain; }
+  .cert figcaption { margin-top: 6px; font-size: 12px; color: var(--muted); text-align: center; }
+
   .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
   .btn {
     display: inline-flex; align-items: center; gap: 6px;
@@ -191,9 +197,26 @@
                ・Xの投稿URL（x.com/…/status/…）なら、投稿がページ内に埋め込み表示されます
                ・それ以外（カクヨム、TALES、note など）は「作品を読む」ボタンになります
    resultUrl : 結果発表ページのURL（無ければ ""）
+   image     : 受賞証明などの画像（無ければ ""）
+               ・画像は awards フォルダに入れ、"awards/ファイル名.jpg" のように書く
+               ・タップすると原寸の画像が別のタブで開きます
+               ・住所や本名など、公開したくない部分は塗りつぶしてから入れてください
+   imageNote : 画像の下に添える一言（例："主催者からの受賞通知"。無ければ ""）
    ※ 下の2件は書き方の見本です。実際の作品に書き換えるか、削除してください。
    ========================================================= */
 const WORKS = [
+  {
+    title: "INAI International AI Awards 2026",
+    category: "AIアート",
+    award: "Silver Winner",
+    contest: "Best AI Art 部門 ／ 作品「The Aperture of Instinct」",
+    date: "2026-11",
+    summary: "",
+    url: "",
+    resultUrl: "https://www.inaiawards.com/winners/doranekoccc",
+    image: "awards/2026-11_inai-silver.jpg",
+    imageNote: "主催者（INAI）発行の受賞証明"
+  },
   {
     title: "PixAI Tsubaki.3 スペシャルコンテスト",
     category: "AIアート",
@@ -202,7 +225,9 @@ const WORKS = [
     date: "2026-10",
     summary: "",
     url: "https://x.com/doraneko840/status/2104059916843671631",
-    resultUrl: ""
+    resultUrl: "",
+    image: "",
+    imageNote: ""
   },
   {
     title: "EGOIST 8月1日発行号",
@@ -212,7 +237,9 @@ const WORKS = [
     date: "2026-08",
     summary: "",
     url: "https://etomusu-zoukango.booth.pm/items/8671468",
-    resultUrl: ""
+    resultUrl: "",
+    image: "",
+    imageNote: ""
   },
   {
     title: "第2回ジャングル俳句大賞",
@@ -222,7 +249,9 @@ const WORKS = [
     date: "2026-08",
     summary: "",
     url: "",
-    resultUrl: "https://store.junglejapan.com/ext/haiku_taishou/02.html"
+    resultUrl: "https://store.junglejapan.com/ext/haiku_taishou/02.html",
+    image: "",
+    imageNote: ""
   },
   {
     title: "PixAI 春日の響き・スペシャルイラストコンテスト",
@@ -232,7 +261,9 @@ const WORKS = [
     date: "2026-05",
     summary: "",
     url: "https://x.com/doraneko840/status/2054141547554488721",
-    resultUrl: ""
+    resultUrl: "",
+    image: "",
+    imageNote: ""
   },
 ];
 /* ===================== ▲ ここまで ===================== */
@@ -304,6 +335,20 @@ const WORKS = [
     li.appendChild(el('h2', null, w.title));
     if (w.contest) li.appendChild(el('p', 'contest', w.contest));
     if (w.summary) li.appendChild(el('p', 'summary', w.summary));
+
+    // 受賞証明の画像
+    if (w.image) {
+      const fig = el('figure', 'cert');
+      const a = el('a');
+      a.href = w.image; a.target = '_blank'; a.rel = 'noopener';
+      const img = el('img');
+      img.src = w.image; img.loading = 'lazy';
+      img.alt = (w.imageNote || '受賞証明') + '：' + w.title;
+      img.onerror = () => fig.remove();
+      a.appendChild(img); fig.appendChild(a);
+      if (w.imageNote) fig.appendChild(el('figcaption', null, w.imageNote));
+      li.appendChild(fig);
+    }
 
     // Xの投稿は埋め込み
     if (isX(w.url)) {
